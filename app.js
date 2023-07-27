@@ -1,49 +1,37 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
-const cors = require('cors');
+const session = require('express-session');
+const auth_routes = require('./router/auth_users').authenticated;
+const package_routes = require('./router/package').package;
+const rates_routes = require('./router/rates').rates;
 
 const app = express();
-app.use(bodyParser.json());
-app.use(cors());
 
-const secretKey = 'your-secret-key';
+app.use(express.json());
 
-// Sample user data for demonstration purposes
-const users = [
-  { username: 'admin', password: 'adminpassword' }
-];
+app.use("/api", session({ secret: "shipping_calculator", resave: true, saveUninitialized: true }));
 
-// Middleware to authenticate JWT token
-function authenticateToken(req, res, next) {
-  const token = req.header('Authorization');
-  if (!token) return res.status(401).json({ message: 'Access denied' });
-
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid token' });
-    req.user = user;
-    next();
-  });
-}
-
-// Sample protected route
-app.get('/protected', authenticateToken, (req, res) => {
-  res.json({ message: 'This is a protected route', user: req.user });
-});
-
-// Login route - returns a JWT token upon successful login
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  const user = users.find(u => u.username === username && u.password === password);
-
-  if (!user) {
-    return res.status(401).json({ message: 'Invalid credentials' });
+app.use("/api/auth/*", function auth(req, res, next) {
+  let token = req.session.authorization;
+  if (token) {
+    token = token['accessToken'];
+    jwt.verify(token, "access", (err, user) => {
+      if (!err) {
+        req.user = user;
+        next();
+      } else {
+        return res.status(403).json({ message: "User not authenticated" });
+      }
+    });
+  } else {
+    return res.status(403).json({ message: "User not logged in" });
   }
-
-  const token = jwt.sign({ username }, secretKey);
-  res.json({ token });
 });
 
-// Export the app for use in other files
-module.exports = app;
+app.use("/api/auth", auth_routes);
+app.use("/api/package", package_routes);
+app.use("/api/rates", rates_routes);
+
+const PORT = 5000;
+
+app.listen(PORT, () => console.log("Server is running"));
