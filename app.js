@@ -9,17 +9,19 @@ const app = express();
 // Parse incoming JSON data
 app.use(express.json());
 
-// Configure express-session middleware
-app.use(session({
-  secret: "agent-key-270723",
-  resave: true,
-  saveUninitialized: true
-}));
 
-// Route handlers for different paths
+// Add the code for Task XY
 app.use("/api/auth", auth_routes);
-app.use("/api/package", package_routes);
-app.use("/api/rates", rates_routes);
+
+
+
+// Add the code for Task 2
+
+
+
+// Add the code for Task 4
+
+
 
 const PORT = 5000;
 

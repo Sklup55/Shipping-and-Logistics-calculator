@@ -7,8 +7,9 @@ let shippingRates = [
   { weight: 10, rate: 15 }
 ];
 
+// Task 5
 rates.get('/', (req, res) => {
-  res.status(200).json(shippingRates);
+//   Add the code
 });
 
 rates.post('/update', (req, res) => {

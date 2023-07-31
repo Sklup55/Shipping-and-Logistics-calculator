@@ -7,8 +7,9 @@ let packageData = [
   { size: 'large', rate: 30 }
 ];
 
+// Task 3
 package.get('/', (req, res) => {
-  res.status(200).json(packageData);
+    // Add the code
 });
 
 package.post('/update', (req, res) => {
