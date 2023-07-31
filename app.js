@@ -10,13 +10,14 @@ const app = express();
 app.use(express.json());
 
 
-// Add the code for Task XY
+// Add the code for Task 1
+
+
+// Route for Login (Tasks 6 & 7)
 app.use("/api/auth", auth_routes);
 
 
-
 // Add the code for Task 2
-
 
 
 // Add the code for Task 4
