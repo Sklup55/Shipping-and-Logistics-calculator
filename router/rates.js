@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+
 const rates = express.Router();
 
 let shippingRates = [
@@ -7,17 +9,23 @@ let shippingRates = [
   { weight: 10, rate: 15 }
 ];
 
+
+// Task 10
+const jwtAuthMiddleware = (req, res, next) => {
+//   Add the code
+
+};
+  
+
 // Task 5
 rates.get('/', (req, res) => {
 //   Add the code
 });
 
 
-
-// Task 9
-rates.post('/update', (req, res) => {
-    // Add the code
-
+// Task 11
+rates.post('/update', jwtAuthMiddleware, (req, res) => {
+//   Add the code
 });
 
 module.exports.rates = rates;

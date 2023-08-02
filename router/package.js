@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+
 const package = express.Router();
 
 let packageData = [
@@ -7,14 +9,21 @@ let packageData = [
   { size: 'large', rate: 30 }
 ];
 
+
+// Task 8
+const jwtAuthMiddleware = (req, res, next) => {
+    // Add the code
+
+  };
+
 // Task 3
 package.get('/', (req, res) => {
     // Add the code
 });
 
 
-// Task 8
-package.post('/update', (req, res) => {
+// Task 9
+package.post('/update', jwtAuthMiddleware, (req, res) => {
     // Add the code
 
 });
