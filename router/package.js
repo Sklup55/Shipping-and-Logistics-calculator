@@ -4,9 +4,9 @@ const jwt = require('jsonwebtoken');
 const package = express.Router();
 
 let packageData = [
-  { size: 'small', rate: 10 },
-  { size: 'medium', rate: 20 },
-  { size: 'large', rate: 30 }
+  { size: 'small', weight: 1 },
+  { size: 'medium', weight: 5 },
+  { size: 'large', weight: 10 }
 ];
 
 
